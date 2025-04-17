@@ -1,0 +1,17 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Visual Studio settings
+.vscode/
+.vs/
+
+# Other
+*.log
+*.db
+.env
+appsettings.Development.json
