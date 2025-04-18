@@ -43,6 +43,10 @@ namespace TravelExperienceEgypt.DataAccess.Data
                 .HasOne(w => w.User)
                 .WithMany()
                 .HasForeignKey(w => w.UserId);
+
+            modelBuilder.Entity<Post>()
+                .HasIndex(c => new { c.UserId, c.PlaceId })
+                .IsUnique();
         }
 
     }
