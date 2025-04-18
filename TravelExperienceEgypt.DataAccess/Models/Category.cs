@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    internal class Category
+    internal class Category:BaseModel
     {
-        [Key]
-        public int Id { get; set; }
+    //    [Key]
+    //    public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }

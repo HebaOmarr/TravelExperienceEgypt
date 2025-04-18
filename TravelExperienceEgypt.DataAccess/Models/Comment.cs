@@ -11,6 +11,7 @@ namespace TravelExperienceEgypt.DataAccess.Models
     internal class Comment
     {
 
+        public bool IsDeleted { get; set; } = false;
 
         public string UserId { get; set; }
         public User? User { get; set; } 

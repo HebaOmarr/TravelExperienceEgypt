@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    internal class Post
+    internal class Post:BaseModel
     {
-        [Key]
-        public int Id { get; set; }
+        //[Key]
+        //public int Id { get; set; }
         public string UserExperice { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

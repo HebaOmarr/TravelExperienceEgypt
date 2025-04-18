@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    internal class Place
+    internal class Place:BaseModel
     {
-        [Key]
-        public int Id { get; set; }
+        //[Key]
+        //public int Id { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }

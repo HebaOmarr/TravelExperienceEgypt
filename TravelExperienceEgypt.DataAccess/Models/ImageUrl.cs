@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    internal class ImageUrl
+    internal class ImageUrl:BaseModel
     {
-        [Key]
-        public int Id { get; set; }
+        //[Key]
+        //public int Id { get; set; }
         public string Url { get; set; }
         public int PostId { get; set; }
 

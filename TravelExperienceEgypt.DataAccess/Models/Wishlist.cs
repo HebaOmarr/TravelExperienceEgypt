@@ -8,6 +8,7 @@ namespace TravelExperienceEgypt.DataAccess.Models
 {
     internal class Wishlist
     {
+        public bool IsDeleted { get; set; } = false;
         public string UserId { get; set; }
         public User? User { get; set; }
         public int PostId { get; set; }

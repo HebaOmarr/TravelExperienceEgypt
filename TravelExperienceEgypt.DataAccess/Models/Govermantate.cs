@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    internal class Govermantate
+    internal class Govermantate:BaseModel
     {
-        [Key]
-        public int Id { get; set; }
+        //[Key]
+        //public int Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
