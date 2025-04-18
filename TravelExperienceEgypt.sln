@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelExperienceEgypt", "TravelExperienceEgypt\TravelExperienceEgypt.csproj", "{2537B5F7-0594-4CFD-B1C8-FEF7C03573F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelExperienceEgypt.API", "TravelExperienceEgypt\TravelExperienceEgypt.API.csproj", "{2537B5F7-0594-4CFD-B1C8-FEF7C03573F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelExperienceEgypt.Model", "TravelExperienceEgypt.Model\TravelExperienceEgypt.Model.csproj", "{7EB963B7-C5F2-4C08-A190-9B8917E14013}"
 EndProject
