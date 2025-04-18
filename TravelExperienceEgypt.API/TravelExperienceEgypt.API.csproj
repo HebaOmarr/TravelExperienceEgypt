@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TravelExperienceEgypt.Model\TravelExperienceEgypt.BusinessLogic.csproj" />
+    <ProjectReference Include="..\TravelExperienceEgypt.BusinessLogic\TravelExperienceEgypt.BusinessLogic.csproj" />
   </ItemGroup>
 
   <ItemGroup>
