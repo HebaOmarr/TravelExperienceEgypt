@@ -9,6 +9,7 @@ namespace TravelExperienceEgypt.DataAccess.Models
 {
     public class ApplicationUser: IdentityUser<int>   
     {
+      
 
         public string AboutMe { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;

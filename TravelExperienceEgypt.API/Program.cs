@@ -1,8 +1,13 @@
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using TravelExperienceEgypt.DataAccess.Data;
 using TravelExperienceEgypt.DataAccess.Models;
 using TravelExperienceEgypt.DataAccess.UnitOfWork;
+
+using TravelExperienceEgypt.API.DTOs;
+
 namespace TravelExperienceEgypt
 {
     public class Program
@@ -24,8 +29,10 @@ namespace TravelExperienceEgypt
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
-            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-            .AddEntityFrameworkStores<ApplicationDBContext>();
+            builder.Services.AddIdentityCore<ApplicationUser>().AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDBContext>()
+                .AddDefaultTokenProviders();
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -39,7 +46,6 @@ namespace TravelExperienceEgypt
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             app.UseAuthorization();
 
 
