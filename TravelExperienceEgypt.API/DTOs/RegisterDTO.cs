@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace TravelExperienceEgypt.API.DTOs
 {
@@ -12,7 +13,8 @@ namespace TravelExperienceEgypt.API.DTOs
         public string LastName { get; set; } = null!;
         [Required(ErrorMessage = "Email Address Is Required")]
         [EmailAddress]
-        public string Email { get; set; } = null!;
+
+        public string EmailAddress { get; set; } = null!;
 
         [Required(ErrorMessage = "Password Is Required")]
         [DataType(DataType.Password)]
