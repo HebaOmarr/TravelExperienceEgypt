@@ -9,14 +9,14 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDBContext applicationDBContext;
+     //   private readonly ApplicationDBContext applicationDBContext;
         public async void Dispose()
         {
-            await applicationDBContext.DisposeAsync();
+       //     await applicationDBContext.DisposeAsync();
         }
         public async Task Save()
         {
-            await applicationDBContext.SaveChangesAsync();
+         //   await applicationDBContext.SaveChangesAsync();
         }
     }
 }

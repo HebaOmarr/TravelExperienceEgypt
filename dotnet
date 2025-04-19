@@ -1,0 +1,9 @@
+System.IO.IOException: The filename, directory name, or volume label syntax is incorrect. : 'D:\ITI\API_Project\TravelExperienceEgypt.APID:\ITI\obj'
+   at System.IO.FileSystem.CreateDirectory(String fullPath, Byte[] securityDescriptor)
+   at System.IO.Directory.CreateDirectory(String path)
+   at Microsoft.EntityFrameworkCore.Tools.Project.FromFile(String file, String buildExtensionsDir, String framework, String configuration, String runtime)
+   at Microsoft.EntityFrameworkCore.Tools.RootCommand.Execute(String[] _)
+   at Microsoft.EntityFrameworkCore.Tools.Commands.CommandBase.<>c__DisplayClass0_0.<Configure>b__0(String[] args)
+   at Microsoft.DotNet.Cli.CommandLine.CommandLineApplication.Execute(String[] args)
+   at Microsoft.EntityFrameworkCore.Tools.Program.Main(String[] args)
+The filename, directory name, or volume label syntax is incorrect. : 'D:\ITI\API_Project\TravelExperienceEgypt.APID:\ITI\obj'

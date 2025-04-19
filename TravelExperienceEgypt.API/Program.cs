@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using TravelExperienceEgypt.DataAccess.Data;
+using TravelExperienceEgypt.DataAccess.Models;
 using TravelExperienceEgypt.DataAccess.UnitOfWork;
 namespace TravelExperienceEgypt
 {
@@ -18,9 +19,13 @@ namespace TravelExperienceEgypt
               {
                   options.UseSqlServer(builder.Configuration.GetConnectionString("DataBaseConnectionString"));
               }
-          );
+              );
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+            .AddEntityFrameworkStores<ApplicationDBContext>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

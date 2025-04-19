@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    internal class Category:BaseModel
+    public class Category:BaseModel
     {
     //    [Key]
     //    public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
-      
+        public string Name { get; set; } = null!;
+
         // category from Admin is true User Can enter other name make it false until Revision from admin
         public bool IsVerified { get; set; }
 

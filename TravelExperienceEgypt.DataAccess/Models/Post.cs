@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    internal class Post:BaseModel
+    public class Post:BaseModel
     {
         //[Key]
         //public int Id { get; set; }
-        public string UserExperice { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public float Rate { get; set; }
         public DateTime DatePosted { get; set; }
@@ -23,11 +22,14 @@ namespace TravelExperienceEgypt.DataAccess.Models
         [ForeignKey(nameof(PlaceId))]
         public Place? Place { get; set; }
 
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public User? User { get; set; }
+        public ApplicationUser? User { get; set; }
+        IEnumerable<ImageUrl>? ImageUrls { get; set; }
+        public IEnumerable<Comment>? Comments { get; set; }
+        public IEnumerable<Wishlist>? Wishlists { get; set; }
 
-        
+
     }
 }

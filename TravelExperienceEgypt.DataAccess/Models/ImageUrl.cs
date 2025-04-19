@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    internal class ImageUrl:BaseModel
+    public class ImageUrl:BaseModel
     {
         //[Key]
         //public int Id { get; set; }
-        public string Url { get; set; }
+        public string Url { get; set; } = string.Empty;
         public int PostId { get; set; }
 
         [ForeignKey(nameof(PostId))]
