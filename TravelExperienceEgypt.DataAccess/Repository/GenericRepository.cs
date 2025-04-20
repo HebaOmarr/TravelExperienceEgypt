@@ -28,9 +28,7 @@ namespace TravelExperienceEgypt.DataAccess.Repository
             TEntity? result = await _applicationDBContext.Set<TEntity>().FirstOrDefaultAsync(Predicate);
             if (result is not null)
             {
-
                 _applicationDBContext.Set<TEntity>().Remove(result);
-
                 return true;
             }
             return false;
@@ -49,9 +47,9 @@ namespace TravelExperienceEgypt.DataAccess.Repository
             return await _applicationDBContext.Set<TEntity>().ToListAsync();
         }
 
-        public  IQueryable<TEntity> GetAllWithFilter(Expression<Func<TEntity, bool>> expression)
+        public IQueryable<TEntity> GetAllWithFilter(Expression<Func<TEntity, bool>> expression)
         {
-            return  _applicationDBContext.Set<TEntity>().Where(expression);
+            return _applicationDBContext.Set<TEntity>().Where(expression);
         }
 
         /// <summary>
