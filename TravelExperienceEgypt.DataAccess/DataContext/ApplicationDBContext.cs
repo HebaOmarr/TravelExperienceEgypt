@@ -18,7 +18,7 @@ namespace TravelExperienceEgypt.DataAccess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Govermantate> Govermantates { get; set; }
         public DbSet<ImageUrl> ImageUrls { get; set; }
-        public DbSet<Notication> Notications { get; set; }
+        public DbSet<Notification> Notications { get; set; }
     
 
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> dbContextOptions) : base(dbContextOptions)

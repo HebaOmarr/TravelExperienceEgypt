@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TravelExperienceEgypt.DataAccess.Models
 {
-    public class Notication:BaseModel
+    public class Notification:BaseModel
     {
         //[Key]
         //public int Id { get; set; }

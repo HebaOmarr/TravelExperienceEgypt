@@ -18,7 +18,7 @@ namespace TravelExperienceEgypt.DataAccess.Models
         IEnumerable<Post>? Posts { get; set; }
         IEnumerable<Comment>? Comments { get; set; }
         IEnumerable<Wishlist>? Wishlists { get; set; }
-        public IEnumerable<Notication>? Notications { get; set; }
+        public IEnumerable<Notification>? Notications { get; set; }
         public String FirstName { get; set; } = null!;
         public String LastName { get; set; } = null!;
 

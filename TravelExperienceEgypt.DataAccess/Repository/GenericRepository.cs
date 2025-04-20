@@ -47,6 +47,11 @@ namespace TravelExperienceEgypt.DataAccess.Repository
             return await _applicationDBContext.Set<TEntity>().ToListAsync();
         }
 
+        public  IQueryable<TEntity> GetAllWithFilter(Expression<Func<TEntity, bool>> expression)
+        {
+            return  _applicationDBContext.Set<TEntity>().Where(expression);
+        }
+
         /// <summary>
         /// Return a Nullable Item Of Entity
         /// </summary>
