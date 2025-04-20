@@ -15,6 +15,7 @@ namespace TravelExperienceEgypt.DataAccess.Repository.Contract
         Task<bool> UpdateAsync(Expression<Func<TEntity, bool>> Predicate, TEntity entity);
         Task<TEntity?> GetItemAsync(Expression<Func<TEntity, bool>> expression, string? Selector = null);
         Task<IEnumerable<TEntity>> GetAllAsync(string? Selector = null);
+        IQueryable<TEntity> GetAllWithFilter(Expression <Func<TEntity, bool>> expression);
         Task<IEnumerable<TEntity>> ReadAllAsync(string? Selector = null);
     }
 }
