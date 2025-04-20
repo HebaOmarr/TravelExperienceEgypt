@@ -28,7 +28,9 @@ namespace TravelExperienceEgypt.DataAccess.Repository
             TEntity? result = await _applicationDBContext.Set<TEntity>().FirstOrDefaultAsync(Predicate);
             if (result is not null)
             {
+
                 _applicationDBContext.Set<TEntity>().Remove(result);
+
                 return true;
             }
             return false;

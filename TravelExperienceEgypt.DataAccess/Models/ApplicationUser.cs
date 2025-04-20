@@ -9,8 +9,9 @@ namespace TravelExperienceEgypt.DataAccess.Models
 {
     public class ApplicationUser: IdentityUser<int>   
     {
-      
 
+        public String FirstName { get; set; } = null!;
+        public String LastName { get; set; } = null!;
         public string AboutMe { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
@@ -20,8 +21,7 @@ namespace TravelExperienceEgypt.DataAccess.Models
         IEnumerable<Comment>? Comments { get; set; }
         IEnumerable<Wishlist>? Wishlists { get; set; }
         public IEnumerable<Notication>? Notications { get; set; }
-        public String FirstName { get; set; } = null!;
-        public String LastName { get; set; } = null!;
+      
 
     }
 }

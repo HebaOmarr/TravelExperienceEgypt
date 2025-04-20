@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using TravelExperienceEgypt.API.DTOs;
 using TravelExperienceEgypt.BusinessLogic.Services;
 using TravelExperienceEgypt.DataAccess.Models;
@@ -19,7 +20,7 @@ namespace TravelExperienceEgypt.API.Controllers
         private readonly AccountService _accountService;
 
         public AccountController(RoleManager<ApplicationRole> roleManager,
-            UserManager<ApplicationUser> userManager, AccountService accountService   )
+            UserManager<ApplicationUser> userManager, AccountService accountService)
         {
 
             _roleManager = roleManager;
@@ -29,7 +30,7 @@ namespace TravelExperienceEgypt.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -56,11 +57,11 @@ namespace TravelExperienceEgypt.API.Controllers
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-              if(await _userManager.Users.AnyAsync())  await _userManager.AddToRoleAsync(user, "User");
-              else await _userManager.AddToRoleAsync(user, "Admin");
+                if (await _userManager.Users.AnyAsync()) await _userManager.AddToRoleAsync(user, "User");
+                else await _userManager.AddToRoleAsync(user, "Admin");
 
                 DateTime expired = DateTime.Now.AddHours(3);
-                string token = await _accountService.GenerateToken(user , expired);
+                string token = await _accountService.GenerateToken(user, expired);
                 return Created("", new
                 {
                     expired = expired,
@@ -77,11 +78,11 @@ namespace TravelExperienceEgypt.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO model)
         {
-          if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-             ApplicationUser? user= await _userManager.FindByEmailAsync(model.EmailAddress);
+            ApplicationUser? user = await _userManager.FindByEmailAsync(model.EmailAddress);
             if (user == null)
             {
                 return NotFound(new { message = "User not found." });
@@ -105,8 +106,19 @@ namespace TravelExperienceEgypt.API.Controllers
             }
         }
 
+        //[HttpGet("profile")]
+        //public async Task<IActionResult> profile() {
 
-      
+        //    var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+        //    if(userName == null)
+        //    {
+        //        return Unauthorized();
+        //    }
+        //    var user = await _userManager.FindByNameAsync(userName.Value);
+        //}
 
-    }
+
+
+
+    } 
 }
