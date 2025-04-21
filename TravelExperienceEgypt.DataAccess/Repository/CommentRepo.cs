@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    internal class CommentRepo : GenericRepository<Comment>, ICommentRepo
+    public class CommentRepo : GenericRepository<Comment>, ICommentRepo
     {
         private readonly ApplicationDBContext applicationDBContext;
         public CommentRepo(ApplicationDBContext applicationDBContext) : base(applicationDBContext)

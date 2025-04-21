@@ -17,12 +17,10 @@ namespace TravelExperienceEgypt.DataAccess.Repository
         {
             _applicationDBContext = applicationDBContext;
         }
-
         public async Task AddAsync(TEntity entity)
         {
             await _applicationDBContext.Set<TEntity>().AddAsync(entity);
         }
-
         public async Task<bool> Delete(Expression<Func<TEntity, bool>> Predicate)
         {
             TEntity? result = await _applicationDBContext.Set<TEntity>().FirstOrDefaultAsync(Predicate);
@@ -47,11 +45,12 @@ namespace TravelExperienceEgypt.DataAccess.Repository
             return await _applicationDBContext.Set<TEntity>().ToListAsync();
         }
 
+        ///  <summary>
+        ///  It's a Generic Method to Get All Items With Filter
         public IQueryable<TEntity> GetAllWithFilter(Expression<Func<TEntity, bool>> expression)
         {
             return _applicationDBContext.Set<TEntity>().Where(expression);
         }
-
         /// <summary>
         /// Return a Nullable Item Of Entity
         /// </summary>
@@ -66,7 +65,6 @@ namespace TravelExperienceEgypt.DataAccess.Repository
             }
             return await _applicationDBContext.Set<TEntity>().FirstOrDefaultAsync(expression);
         }
-
         /// <summary>
         ///  Return a Read Only List of Entity
         ///  AsNoTracking List
@@ -82,7 +80,6 @@ namespace TravelExperienceEgypt.DataAccess.Repository
             }
             return await _applicationDBContext.Set<TEntity>().AsNoTracking().ToListAsync();
         }
-
         public async Task<bool> UpdateAsync(Expression<Func<TEntity, bool>> Predicate, TEntity entity)
         {
             TEntity? existedItem = await _applicationDBContext.Set<TEntity>().FirstOrDefaultAsync(Predicate);

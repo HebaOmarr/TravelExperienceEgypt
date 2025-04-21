@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    internal class WishlistRepo : GenericRepository<Wishlist>, IWishlistRepo
+    public class WishlistRepo : GenericRepository<Wishlist>, IWishlistRepo
     {
         private readonly ApplicationDBContext applicationDBContext;
         public WishlistRepo(ApplicationDBContext applicationDBContext) : base(applicationDBContext)

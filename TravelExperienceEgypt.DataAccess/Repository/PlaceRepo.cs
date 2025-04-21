@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    internal class PlaceRepo : GenericRepository<Place>, IPlaceRepo
+    public class PlaceRepo : GenericRepository<Place>, IPlaceRepo
     {
         private readonly ApplicationDBContext applicationDBContext;
         public PlaceRepo(ApplicationDBContext applicationDBContext) : base(applicationDBContext)

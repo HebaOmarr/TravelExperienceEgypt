@@ -9,7 +9,7 @@ using TravelExperienceEgypt.DataAccess.Repository.Contract;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    internal class CategoryRepo : GenericRepository<Category>, ICategoryRepo
+    public class CategoryRepo : GenericRepository<Category>, ICategoryRepo
     {
         private readonly ApplicationDBContext applicationDBContext;
 

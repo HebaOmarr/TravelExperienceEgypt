@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    internal class IMageURLRepo : GenericRepository<ImageUrl>, IIMageURLRepo
+    public class IMageURLRepo : GenericRepository<ImageUrl>, IIMageURLRepo
     {
         private readonly ApplicationDBContext applicationDBContext;
         public IMageURLRepo(ApplicationDBContext applicationDBContext) : base(applicationDBContext)

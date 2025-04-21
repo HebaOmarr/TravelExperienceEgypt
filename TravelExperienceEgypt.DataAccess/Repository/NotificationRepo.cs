@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    internal class NotificationRepo : GenericRepository<Notification>, INotificationRepo
+    public class NotificationRepo : GenericRepository<Notification>, INotificationRepo
     {
         private readonly ApplicationDBContext applicationDBContext;
         public NotificationRepo(ApplicationDBContext applicationDBContext) : base(applicationDBContext)

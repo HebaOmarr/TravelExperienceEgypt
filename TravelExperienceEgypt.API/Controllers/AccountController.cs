@@ -106,19 +106,82 @@ namespace TravelExperienceEgypt.API.Controllers
             }
         }
 
-        //[HttpGet("profile")]
-        //public async Task<IActionResult> profile() {
+        [HttpGet("profile")]
+        public async Task<IActionResult> profile()
+        {
 
-        //    var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
-        //    if(userName == null)
-        //    {
-        //        return Unauthorized();
-        //    }
-        //    var user = await _userManager.FindByNameAsync(userName.Value);
-        //}
+            var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (userName == null)
+            {
+                return Unauthorized();
+            }
+            var user = await _userManager.FindByNameAsync(userName.Value);
+
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+            UserProfileDTO userProfile= await _accountService.usrTOuserProfileAsync(user);
+           
+            return Ok(userProfile);
+
+        }
+        //Image Upload
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UserProfileDTO model)
+        {
+            if (model == null || string.IsNullOrEmpty(model.UserName))
+            {
+                return BadRequest(new { message = "Invalid user data." });
+            }
+
+            ApplicationUser user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+            user.FirstName = model.FirstName ?? user.FirstName;
+            user.LastName = model.LastName ?? user.LastName;
+            user.AboutMe = model.AboutMe ?? user.AboutMe;
+            user.Country = model.Country ?? user.Country;
+            user.City = model.City ?? user.City;
+            user.Image = model.Image ?? user.Image;
+            user.CoverImage = model.CoverImage ?? user.CoverImage;
+            IdentityResult result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok(new { message = "Profile updated successfully." });
+            }
+            else
+            {
+                var errors = result.Errors.Select(e => e.Description).ToList();
+                return BadRequest(new { errors });
+            }
 
 
+        }
+
+        [HttpDelete("deleteUser")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok(new { message = "User deleted successfully." });
+            }
+            else
+            {
+                var errors = result.Errors.Select(e => e.Description).ToList();
+                return BadRequest(new { errors });
+            }
 
 
+        }
     } 
 }

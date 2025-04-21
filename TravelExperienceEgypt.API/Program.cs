@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using TravelExperienceEgypt.DataAccess.Repository.Contract;
+using TravelExperienceEgypt.DataAccess.Repository;
 
 namespace TravelExperienceEgypt
 {
@@ -31,6 +33,8 @@ namespace TravelExperienceEgypt
               );
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IPostRepo, PostRepo>();
+            builder.Services.AddScoped<IPlaceRepo, PlaceRepo>();
             builder.Services.AddScoped<AccountService>();
 
 

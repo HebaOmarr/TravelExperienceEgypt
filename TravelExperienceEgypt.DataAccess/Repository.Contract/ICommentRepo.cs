@@ -7,7 +7,7 @@ using TravelExperienceEgypt.DataAccess.Models;
 
 namespace TravelExperienceEgypt.DataAccess.Repository.Contract
 {
-    internal interface ICommentRepo:IGenericRepository<Comment>
+    public interface ICommentRepo:IGenericRepository<Comment>
     {
     }
 }

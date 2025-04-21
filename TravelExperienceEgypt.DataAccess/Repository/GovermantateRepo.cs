@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    internal class GovermantateRepo : GenericRepository<Govermantate>, IGovermantateRepo
+    public class GovermantateRepo : GenericRepository<Govermantate>, IGovermantateRepo
     {
         private readonly ApplicationDBContext applicationDBContext;
         public GovermantateRepo(ApplicationDBContext applicationDBContext) : base(applicationDBContext)

@@ -1,21 +1,26 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TravelExperienceEgypt.API.DTOs;
 using TravelExperienceEgypt.DataAccess.Models;
+using TravelExperienceEgypt.DataAccess.UnitOfWork;
 namespace TravelExperienceEgypt.BusinessLogic.Services
 {
     public class AccountService
     {
         private readonly IConfiguration config;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUnitOfWork unitOfWork;
 
-        public AccountService(IConfiguration config ,UserManager<ApplicationUser> userManager)
+        public AccountService(IConfiguration config ,UserManager<ApplicationUser> userManager,IUnitOfWork unitOfWork)
         {
             this.config = config;
             this.userManager = userManager;
+            this.unitOfWork = unitOfWork;
         }
         public async Task<string> GenerateToken(ApplicationUser user ,DateTime expire)
         {
@@ -55,6 +60,44 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
             return new JwtSecurityTokenHandler().WriteToken(myToken);
         }
 
-       
+        public async Task<UserProfileDTO> usrTOuserProfileAsync(ApplicationUser user)
+        {
+            var posts = await unitOfWork.Post.ReadAllAsync("Place");
+            posts = posts.Where(e => e.UserId == user.Id);
+            IEnumerable<Place>? places = posts.Select(e => e.Place).Distinct();
+            return new UserProfileDTO
+            {
+               
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                AboutMe = user.AboutMe,
+                Country = user.Country,
+                City = user.City,
+                EmailAddress = user.Email,
+                Image = user.Image,
+                CoverImage = user.CoverImage,
+                Posts = posts,
+                Places = places
+            };
+        }
+
+        public ApplicationUser ProfileTOuser(UserProfileDTO userDTO)
+        {
+            return new ApplicationUser
+            {
+                FirstName = userDTO.FirstName,
+                LastName = userDTO.LastName,
+                UserName = userDTO.UserName,
+                AboutMe = userDTO.AboutMe,
+                Email = userDTO.EmailAddress,
+                Country = userDTO.Country,
+                City = userDTO.City,
+                Image = userDTO.Image,
+                CoverImage = userDTO.CoverImage
+            };
+        }
+
+
     }
 }

@@ -7,7 +7,7 @@ using TravelExperienceEgypt.DataAccess.Models;
 
 namespace TravelExperienceEgypt.DataAccess.Repository.Contract
 {
-    internal interface INotificationRepo: IGenericRepository<Notification>
+    public interface INotificationRepo: IGenericRepository<Notification>
     {
     }
 }
