@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,14 +10,27 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-     //   private readonly ApplicationDBContext applicationDBContext;
+        private readonly ApplicationDBContext applicationDBContext;
+        public IPostRepo Post { get;  }
+        public IPlaceRepo Place { get;  }
+        public IWishlistRepo WishList { get; }
+        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,IPlaceRepo placeRepo,IWishlistRepo wishlistRepo)
+        {
+            this.applicationDBContext = applicationDBContext;
+            Post = postRepo;
+            Place = placeRepo;
+            WishList = wishlistRepo;
+        }
+
+        
+
         public async void Dispose()
         {
-       //     await applicationDBContext.DisposeAsync();
+            await applicationDBContext.DisposeAsync();
         }
         public async Task Save()
         {
-         //   await applicationDBContext.SaveChangesAsync();
+            await applicationDBContext.SaveChangesAsync();
         }
     }
 }

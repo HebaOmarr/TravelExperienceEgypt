@@ -21,8 +21,4 @@
     <ProjectReference Include="..\TravelExperienceEgypt.BusinessLogic\TravelExperienceEgypt.BusinessLogic.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
 </Project>
