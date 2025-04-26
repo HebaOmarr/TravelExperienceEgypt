@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelExperienceEgypt.DataAccess.Data;
+using TravelExperienceEgypt.DataAccess.Repository;
+using TravelExperienceEgypt.DataAccess.Repository.Contract;
 
 namespace TravelExperienceEgypt.DataAccess.UnitOfWork
 {
@@ -13,13 +15,16 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
         private readonly ApplicationDBContext applicationDBContext;
         public IPostRepo Post { get;  }
         public IPlaceRepo Place { get;  }
+        public IGenericRepository<Category> Category { get; }
         public IWishlistRepo WishList { get; }
-        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,IPlaceRepo placeRepo,IWishlistRepo wishlistRepo)
+        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,IPlaceRepo placeRepo,
+            IWishlistRepo wishlistRepo, IGenericRepository<Category> categoryRepo)
         {
             this.applicationDBContext = applicationDBContext;
             Post = postRepo;
             Place = placeRepo;
             WishList = wishlistRepo;
+            Category = categoryRepo;
         }
 
         

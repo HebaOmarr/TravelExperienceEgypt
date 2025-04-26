@@ -35,23 +35,23 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
 
             return getFilterDto;
         } 
-        public async List<FilterResposeDTO> FilterRequest(FilterRequestDTO requestDTO)
-        {
-            List<FilterResposeDTO> result=new();
+        //public async List<FilterResposeDTO> FilterRequest(FilterRequestDTO requestDTO)
+        //{
+        //    List<FilterResposeDTO> result=new();
 
-            if (requestDTO.Price != null) {
+        //    if (requestDTO.Price != null) {
 
-                var Url = (await ImageURLRepo.GetItemAsync(I => I.PostId == 4)).Url;
+        //        var Url = (await ImageURLRepo.GetItemAsync(I => I.PostId == 4)).Url;
 
-                result = postRepo.GetAllWithFilter(c => c.Price <= requestDTO.Price)
-                    .Select(p => new FilterResposeDTO
-                    {
-                        ImageUrl = (await ImageURLRepo.GetItemAsync(I => I.PostId == p.ID)).Url
+        //        result = postRepo.GetAllWithFilter(c => c.Price <= requestDTO.Price)
+        //            .Select(p => new FilterResposeDTO
+        //            {
+        //                ImageUrl = (await ImageURLRepo.GetItemAsync(I => I.PostId == p.ID)).Url
 
-                        // Rate, Price, PlaceName, GovermantateName, Description, DatePosted, IsInWishList
-                    });
-            }
-            return result;
-        }
+        //                // Rate, Price, PlaceName, GovermantateName, Description, DatePosted, IsInWishList
+        //            });
+        //    }
+        //    return result;
+        //}
     }
 }
