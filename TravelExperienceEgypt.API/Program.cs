@@ -6,6 +6,7 @@ using TravelExperienceEgypt.DataAccess.Data;
 using TravelExperienceEgypt.DataAccess.Models;
 using TravelExperienceEgypt.DataAccess.UnitOfWork;
 using TravelExperienceEgypt.BusinessLogic.Services;
+using TravelExperienceEgypt.BusinessLogic.Services.Contract;
 using TravelExperienceEgypt.API.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using TravelExperienceEgypt.DataAccess.Repository.Contract;
 using TravelExperienceEgypt.DataAccess.Repository;
+using TravelExperienceEgypt.BusinessLogic.AutoMapper;
 
 namespace TravelExperienceEgypt
 {
@@ -28,17 +30,29 @@ namespace TravelExperienceEgypt
             builder.Services.AddDbContext<ApplicationDBContext>(
               options =>
               {
-                  options.UseSqlServer(builder.Configuration.GetConnectionString("DataBaseConnectionString"));
+                 // options.UseSqlServer(builder.Configuration.GetConnectionString("DataBaseConnectionString"));
+                  options.UseSqlServer(builder.Configuration.GetConnectionString("BeshoyCS"));
+
               }
               );
             //register interfaces
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IPostRepo, PostRepo>();
             builder.Services.AddScoped<IWishlistRepo, WishlistRepo>();
+<<<<<<< HEAD
             //register service
             builder.Services.AddScoped<PlaceService>();
             builder.Services.AddScoped<GovernorateService>();
+=======
+
+            builder.Services.AddScoped<IPlaceRepo, PlaceRepo>();
+>>>>>>> 91811c5c4cc536ad1922520700f27000cfe47358
             builder.Services.AddScoped<AccountService>();
+            builder.Services.AddScoped<IGenericRepository<Category>, GenericRepository<Category>>();
+           builder.Services.AddScoped<ICategoryService,CategoryService>();
+
+            builder.Services.AddAutoMapper(typeof(CategoryProfile).Assembly);
+
 
 
 

@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
 using TravelExperienceEgypt.DataAccess.Models;
 using TravelExperienceEgypt.DataAccess.DTO.PlaceDTO;
 using TravelExperienceEgypt.DataAccess.UnitOfWork;
+=======
+>>>>>>> 91811c5c4cc536ad1922520700f27000cfe47358
 
 namespace TravelExperienceEgypt.BusinessLogic.Services
 {
     public class PlaceService
     {
+<<<<<<< HEAD
         private readonly UnitOfWork _unitOfWork;
 
         public PlaceService(UnitOfWork unitOfWork)
@@ -76,5 +80,7 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
         {
             return await _unitOfWork.Place.Delete(p => p.ID == id);
         }
+=======
+>>>>>>> 91811c5c4cc536ad1922520700f27000cfe47358
     }
 }
