@@ -19,9 +19,9 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
         public IPlaceRepository Place { get; private set; }
         public IWishlistRepo WishList { get;  }
         public IGovernorateRepository Govermantate { get; private set; }
-        public IGenericRepository<Category> Category { get; }
+        public ICategoryRepo Category { get; }
         public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,
-            IWishlistRepo wishlistRepo, IGenericRepository<Category> categoryRepo)
+            IWishlistRepo wishlistRepo, ICategoryRepo categoryRepo)
         {
             this.applicationDBContext = applicationDBContext;
             Post = postRepo;

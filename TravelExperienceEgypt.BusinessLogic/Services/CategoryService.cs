@@ -12,7 +12,7 @@ using TravelExperienceEgypt.DataAccess.UnitOfWork;
 
 namespace TravelExperienceEgypt.BusinessLogic.Services
 {
-    public class CategoryService : ICategoryService
+    public class CategoryService 
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

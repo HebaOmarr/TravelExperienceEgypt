@@ -126,5 +126,76 @@ namespace TravelExperienceEgypt.API.Controllers
                 return StatusCode(500, new { message = "An error occurred while deleting the place." });
             }
         }
+
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetPlaces(int? governorateId, int? categoryId, bool? verified)
+        {
+            try
+            {
+                IEnumerable<Place> places = await _placeService.GetPlacesVerifiedCategoryGovernorate(governorateId, categoryId, verified);
+                if (places == null || !places.Any())
+                {
+                    return NotFound("No places found based on the given filters.");
+                }
+
+                return Ok(places);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {Message = "An error occurred while processing your request.", Error = ex.Message });
+            }
+
+        }
+
+
+
+        [HttpGet("unverified")]
+        public async Task<IActionResult> GetUnverifiedPlaces()
+        {
+            try
+            {
+                IEnumerable<Place> unverifiedPlaces = await _placeService.GetPlacesVerifiedCategoryGovernorate(null, null, false);
+
+                if (!unverifiedPlaces.Any())
+                {
+                    return NotFound("No unverified places found.");
+                }
+
+                return Ok(unverifiedPlaces);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while fetching unverified places.",Error = ex.Message });
+            }
+        }
+
+
+
+        [HttpPut("verify/{placeId}")]
+        public async Task<IActionResult> VerifyPlace(int placeId)
+        {
+            try
+            {
+                bool updatedPlace = await _placeService.VerifyPlace(placeId);
+
+                return Ok(new
+                {
+                    Message = $"Place with ID {placeId} has been verified.",  Data = updatedPlace
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Message = "An error occurred while verifying the place.",
+                    Error = ex.Message
+                });
+            }
+        }
+
+
     }
 }
+

@@ -38,6 +38,32 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
             return await _unitOfWork.Place.GetAllWithFilter(p => p.GovermantateId == governorateId).ToListAsync();
         }
 
+
+
+        // Get places filter Verified,Category,Governorate
+
+        public async Task<IEnumerable<Place>> GetPlacesVerifiedCategoryGovernorate(int? governorateId, int? categoryId , bool? verified)
+        {
+            IQueryable<Place> query = _unitOfWork.Place.GetAllWithFilter(p => true);
+
+            if (governorateId.HasValue)
+            {
+                query = query.Where(p => p.GovermantateId == governorateId.Value);
+            }
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.categoryId == categoryId.Value);
+            }
+
+            if (verified.HasValue)
+            {
+                query = query.Where(p => p.IsVerified == verified.Value);
+            }
+
+            return await query.ToListAsync();
+
+        }
         // Create new place
         public async Task CreatePlaceRequest(CreatePlaceDTO dto)
         {
@@ -76,6 +102,29 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
         public async Task<bool> DeletePlaceByIdRequest(int id)
         {
             return await _unitOfWork.Place.Delete(p => p.ID == id);
+        }
+
+
+
+        // Edit VerifyPlace to true
+        public async Task<bool> VerifyPlace(int placeId)
+        {
+            Place place = await GetPlaceByIdRequest(placeId);
+
+            if (place == null)
+            {
+                throw new Exception($"Place with ID {placeId} not found.");
+            }
+
+            if (place.IsVerified)
+            {
+                throw new Exception($"Place with ID {placeId} is already verified.");
+            }
+
+            place.IsVerified = true;
+
+
+            return await _unitOfWork.Place.UpdateAsync(p => p.ID == placeId, place);
         }
     }
 }

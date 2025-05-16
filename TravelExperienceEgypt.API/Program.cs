@@ -40,14 +40,13 @@ namespace TravelExperienceEgypt
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IPostRepo, PostRepo>();
             builder.Services.AddScoped<IWishlistRepo, WishlistRepo>();
+            builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
+
             //register service
             builder.Services.AddScoped<PlaceService>();
             builder.Services.AddScoped<GovernorateService>();
-
-
-            builder.Services.AddScoped<AccountService>();
-            builder.Services.AddScoped<IGenericRepository<Category>, GenericRepository<Category>>();
-           builder.Services.AddScoped<ICategoryService,CategoryService>();
+           builder.Services.AddScoped<AccountService>();
+           builder.Services.AddScoped<CategoryService>();
 
             builder.Services.AddAutoMapper(typeof(CategoryProfile).Assembly);
 

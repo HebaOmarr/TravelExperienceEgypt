@@ -12,7 +12,7 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
     {
         IPostRepo Post{ get; }
         IPlaceRepository Place { get; }
-        IGenericRepository<Category> Category { get; }
+        ICategoryRepo Category { get; }
         IWishlistRepo WishList { get; }
         IGovernorateRepository Govermantate { get; }
         Task Save();  
