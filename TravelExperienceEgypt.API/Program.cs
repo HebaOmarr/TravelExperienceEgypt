@@ -31,10 +31,11 @@ namespace TravelExperienceEgypt
                   options.UseSqlServer(builder.Configuration.GetConnectionString("DataBaseConnectionString"));
               }
               );
-
+            //register interfaces
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IPostRepo, PostRepo>();
             builder.Services.AddScoped<IPlaceRepo, PlaceRepo>();
+            builder.Services.AddScoped<IWishlistRepo, WishlistRepo>();
             builder.Services.AddScoped<AccountService>();
 
 

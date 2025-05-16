@@ -12,6 +12,7 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
         IPostRepo Post{ get; }
         IPlaceRepo Place { get; }
         IWishlistRepo WishList { get; }
+        IGovernorateRepository Govermantate { get; }
         Task Save();  
     }
 }
