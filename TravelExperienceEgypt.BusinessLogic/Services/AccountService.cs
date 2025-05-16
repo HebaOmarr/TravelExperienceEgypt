@@ -64,7 +64,7 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
         {
             var posts = await unitOfWork.Post.ReadAllAsync("Place");
             posts = posts.Where(e => e.UserId == user.Id);
-            IEnumerable<Place>? places = posts.Select(e => e.Place).Distinct();
+            IEnumerable<PlaceService>? places = posts.Select(e => e.Place).Distinct();
             return new UserProfileDTO
             {
                

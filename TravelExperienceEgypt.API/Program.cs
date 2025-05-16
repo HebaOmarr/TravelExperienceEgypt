@@ -34,9 +34,12 @@ namespace TravelExperienceEgypt
             //register interfaces
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IPostRepo, PostRepo>();
-            builder.Services.AddScoped<IPlaceRepo, PlaceRepo>();
             builder.Services.AddScoped<IWishlistRepo, WishlistRepo>();
+            //register service
+            builder.Services.AddScoped<PlaceService>();
+            builder.Services.AddScoped<GovernorateService>();
             builder.Services.AddScoped<AccountService>();
+
 
 
             /*  builder.Services.AddIdentityCore<ApplicationUser>().AddRoles<ApplicationRole>()

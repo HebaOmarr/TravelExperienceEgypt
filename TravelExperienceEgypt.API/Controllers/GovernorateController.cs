@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelExperienceEgypt.BusinessLogic.Services;
 using TravelExperienceEgypt.DataAccess.DTO.GovernorateDTO;
+using TravelExperienceEgypt.DataAccess.Models;
 namespace TravelExperienceEgypt.API.Controllers
 {
     [Route("api/[controller]")]
@@ -18,7 +19,7 @@ namespace TravelExperienceEgypt.API.Controllers
         {
             try
             {
-                var result = await _governorateService.GetAllGovermantateRequest();
+                IEnumerable<Govermantate> result = await _governorateService.GetAllGovermantateRequest();
                 if (result == null || !result.Any())
                     return NotFound(new { message = "No governorates found." });
 
@@ -35,7 +36,7 @@ namespace TravelExperienceEgypt.API.Controllers
         {
             try
             {
-                var result = await _governorateService.GetGovermantateByIdRequest(id);
+                Govermantate result = await _governorateService.GetGovermantateByIdRequest(id);
                 if (result == null)
                     return NotFound(new { message = "Governorate not found." });
 
@@ -47,7 +48,7 @@ namespace TravelExperienceEgypt.API.Controllers
             }
         }
 
-        [HttpGet("by-name/{name}")]
+        [HttpGet("byName/{name}")]
         public async Task<IActionResult> GetGovernorateByName(string name)
         {
             try
@@ -69,7 +70,7 @@ namespace TravelExperienceEgypt.API.Controllers
         {
             try
             {
-                var result = await _governorateService.GetGovermantateWithPlacesRequest();
+                IEnumerable<Govermantate> result = await _governorateService.GetGovermantateWithPlacesRequest();
                 if (result == null || !result.Any())
                     return NotFound(new { message = "No governorates with places found." });
 
@@ -108,7 +109,7 @@ namespace TravelExperienceEgypt.API.Controllers
 
             try
             {
-                var success = await _governorateService.UpdateGovermantateByIdRequest(dto);
+                bool success = await _governorateService.UpdateGovermantateByIdRequest(dto);
                 if (success)
                     return Ok(new { message = "Governorate updated successfully." });
 
@@ -126,7 +127,7 @@ namespace TravelExperienceEgypt.API.Controllers
         {
             try
             {
-                var success = await _governorateService.UpdateGovermantateByIdRequest(id);
+                bool success = await _governorateService.UpdateGovermantateByIdRequest(id);
                 if (success)
                     return Ok(new { message = "Governorate deleted successfully." });
 

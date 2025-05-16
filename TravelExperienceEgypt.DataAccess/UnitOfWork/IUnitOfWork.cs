@@ -10,7 +10,7 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         IPostRepo Post{ get; }
-        IPlaceRepo Place { get; }
+        IPlaceRepository Place { get; }
         IWishlistRepo WishList { get; }
         IGovernorateRepository Govermantate { get; }
         Task Save();  

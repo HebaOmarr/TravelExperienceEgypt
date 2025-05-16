@@ -14,14 +14,14 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
     {
         private readonly ApplicationDBContext applicationDBContext;
         public IPostRepo Post { get;  }
-        public IPlaceRepo Place { get;  }
-        public IWishlistRepo WishList { get; }
+        public IPlaceRepository Place { get; private set; }
+        public IWishlistRepo WishList { get;  }
         public IGovernorateRepository Govermantate { get; private set; }
-        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,IPlaceRepo placeRepo,IWishlistRepo wishlistRepo)
+        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,IWishlistRepo wishlistRepo)
         {
             this.applicationDBContext = applicationDBContext;
             Post = postRepo;
-            Place = placeRepo;
+            
             WishList = wishlistRepo;
            
         }
@@ -33,6 +33,17 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
                     Govermantate = new GovernorateRepository(applicationDBContext);
                 }
                 return Govermantate;
+            }
+        }
+        public IPlaceRepository PlaceRepository
+        {
+            get
+            {
+                if (Place == null)
+                {
+                    Place = new PlaceRepository(applicationDBContext);
+                }
+                return Place;
             }
         }
 
