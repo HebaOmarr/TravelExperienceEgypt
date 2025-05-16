@@ -7,10 +7,11 @@ using TravelExperienceEgypt.DataAccess.UnitOfWork;
 using TravelExperienceEgypt.DataAccess.DTO.GovernorateDTO;
 using TravelExperienceEgypt.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using TravelExperienceEgypt.BusinessLogic.Services.Contract;
 
 namespace TravelExperienceEgypt.BusinessLogic.Services
 {
-    public class GovernorateService
+    public class GovernorateService 
     {
         UnitOfWork _unitOfWork;
         public GovernorateService(UnitOfWork unitOfWork)

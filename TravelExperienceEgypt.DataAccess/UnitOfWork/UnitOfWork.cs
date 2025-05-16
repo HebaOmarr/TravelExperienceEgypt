@@ -5,13 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelExperienceEgypt.DataAccess.Data;
-<<<<<<< HEAD
 using TravelExperienceEgypt.DataAccess.Models;
 using TravelExperienceEgypt.DataAccess.Repository;
-=======
 using TravelExperienceEgypt.DataAccess.Repository;
 using TravelExperienceEgypt.DataAccess.Repository.Contract;
->>>>>>> 91811c5c4cc536ad1922520700f27000cfe47358
 
 namespace TravelExperienceEgypt.DataAccess.UnitOfWork
 {
@@ -19,24 +16,17 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
     {
         private readonly ApplicationDBContext applicationDBContext;
         public IPostRepo Post { get;  }
-<<<<<<< HEAD
         public IPlaceRepository Place { get; private set; }
         public IWishlistRepo WishList { get;  }
         public IGovernorateRepository Govermantate { get; private set; }
-        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,IWishlistRepo wishlistRepo)
-=======
-        public IPlaceRepo Place { get;  }
         public IGenericRepository<Category> Category { get; }
-        public IWishlistRepo WishList { get; }
-        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,IPlaceRepo placeRepo,
+        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,
             IWishlistRepo wishlistRepo, IGenericRepository<Category> categoryRepo)
->>>>>>> 91811c5c4cc536ad1922520700f27000cfe47358
         {
             this.applicationDBContext = applicationDBContext;
             Post = postRepo;
             
             WishList = wishlistRepo;
-<<<<<<< HEAD
            
         }
         public IGovernorateRepository GovermantateRepository
@@ -59,9 +49,6 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
                 }
                 return Place;
             }
-=======
-            Category = categoryRepo;
->>>>>>> 91811c5c4cc536ad1922520700f27000cfe47358
         }
 
 

@@ -16,7 +16,7 @@ namespace TravelExperienceEgypt.API.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<CategoryDTO> categories = await _categoryService.GetAllAsync();
