@@ -4,7 +4,7 @@ A web-based RESTful API built with ASP.NET Core, allowing users to share and exp
 
 ---
 
-## 🧭 Project Overview
+##  Project Overview
 
 **EgyptTravelExperience** enables users to:
 - Explore places categorized by Egyptian governorates.
@@ -17,7 +17,7 @@ This API serves as the backend for a future full web application aimed at simpli
 
 ---
 
-## 🔥 Key Features
+##  Key Features
 
 - ✅ Governorate-based navigation for easy exploration.
 - ✅ Travel post creation with one post allowed per user per place.
@@ -27,7 +27,7 @@ This API serves as the backend for a future full web application aimed at simpli
 
 ---
 
-## 🧱 Technologies Used
+##  Technologies Used
 
 - **Backend Framework:** ASP.NET Core Web API
 - **Database:** SQL Server

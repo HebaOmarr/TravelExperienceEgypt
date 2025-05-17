@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    public class PlaceRepo : GenericRepository<Place>, IPlaceRepo
+    public class PlaceRepository : GenericRepository<Place>, IPlaceRepository
     {
         private readonly ApplicationDBContext applicationDBContext;
-        public PlaceRepo(ApplicationDBContext applicationDBContext) : base(applicationDBContext)
+        public PlaceRepository(ApplicationDBContext applicationDBContext) : base(applicationDBContext)
         {
             this.applicationDBContext = applicationDBContext;
         }

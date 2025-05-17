@@ -17,7 +17,7 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
         IPostRepo postRepo;
         ICategoryRepo CategoryRepo;
         IIMageURLRepo ImageURLRepo;
-        IGovermantateRepo GovermantateRepo;
+        IGovernorateRepository GovermantateRepo;
 
         public PostServices(IPostRepo postRepo)
         {

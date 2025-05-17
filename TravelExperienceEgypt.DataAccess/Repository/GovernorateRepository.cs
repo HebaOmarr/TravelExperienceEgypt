@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace TravelExperienceEgypt.DataAccess.Repository
 {
-    public class GovermantateRepo : GenericRepository<Govermantate>, IGovermantateRepo
+    public class GovernorateRepository : GenericRepository<Govermantate>, IGovernorateRepository
     {
         private readonly ApplicationDBContext applicationDBContext;
-        public GovermantateRepo(ApplicationDBContext applicationDBContext) : base(applicationDBContext)
+        public GovernorateRepository(ApplicationDBContext applicationDBContext) : base(applicationDBContext)
         {
             this.applicationDBContext = applicationDBContext;
         }
+
     }
    
 }
