@@ -36,6 +36,7 @@ namespace TravelExperienceEgypt
             builder.Services.AddScoped<IPostRepo, PostRepo>();
             builder.Services.AddScoped<IPlaceRepo, PlaceRepo>();
             builder.Services.AddScoped<AccountService>();
+            builder.Services.AddScoped<IWishlistRepo,WishlistRepo>();
 
 
             /*  builder.Services.AddIdentityCore<ApplicationUser>().AddRoles<ApplicationRole>()
