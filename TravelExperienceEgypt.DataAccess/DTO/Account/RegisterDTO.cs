@@ -30,11 +30,7 @@ namespace TravelExperienceEgypt.API.DTOs
         [MinLength(6, ErrorMessage = "Must More Than 6 Charachters")]
         public string UserName { get; set; } = null!;
 
-        public string? AboutMe { get; set; } = string.Empty;
-        public string? Country { get; set; } = string.Empty;
-        public string? City { get; set; } = string.Empty;
-        public string? Image { get; set; } = string.Empty;
-        public string? CoverImage { get; set; } = string.Empty;
+        
 
     }
 }
