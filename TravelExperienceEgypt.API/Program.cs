@@ -35,8 +35,23 @@ namespace TravelExperienceEgypt
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IPostRepo, PostRepo>();
             builder.Services.AddScoped<IPlaceRepo, PlaceRepo>();
+            builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
+            builder.Services.AddScoped<ICommentRepo, CommentRepo>();
+            builder.Services.AddScoped<IGovermantateRepo, GovermantateRepo>();
+            builder.Services.AddScoped<IIMageURLRepo, IMageURLRepo>();
+            builder.Services.AddScoped<INotificationRepo, NotificationRepo>();
+            builder.Services.AddScoped<IWishlistRepo, WishlistRepo>();
             builder.Services.AddScoped<AccountService>();
-
+            builder.Services.AddScoped<PostServices>(provider =>
+    new PostServices(
+        provider.GetRequiredService<IPostRepo>(),
+        provider.GetRequiredService<IGovermantateRepo>(),
+        provider.GetRequiredService<ICategoryRepo>(),
+        provider.GetRequiredService<IIMageURLRepo>(),
+        provider.GetRequiredService<IPlaceRepo>(),
+        provider.GetRequiredService<IWishlistRepo>()
+    )
+);
 
             /*  builder.Services.AddIdentityCore<ApplicationUser>().AddRoles<ApplicationRole>()
                   .AddEntityFrameworkStores<ApplicationDBContext>()
@@ -47,6 +62,12 @@ namespace TravelExperienceEgypt
            .AddEntityFrameworkStores<ApplicationDBContext>()
            .AddDefaultTokenProviders();
 
+
+            builder.Services.AddHttpClient("", client =>
+            {
+                client.BaseAddress = new Uri("");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
 
 
             builder.Services.AddCors(options =>
