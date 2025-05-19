@@ -13,8 +13,8 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
 {
     public class GovernorateService 
     {
-        UnitOfWork _unitOfWork;
-        public GovernorateService(UnitOfWork unitOfWork)
+        IUnitOfWork _unitOfWork;
+        public GovernorateService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

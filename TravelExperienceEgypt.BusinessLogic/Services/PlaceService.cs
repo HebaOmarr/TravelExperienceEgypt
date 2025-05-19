@@ -13,9 +13,9 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
 {
     public class PlaceService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PlaceService(UnitOfWork unitOfWork)
+        public PlaceService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
