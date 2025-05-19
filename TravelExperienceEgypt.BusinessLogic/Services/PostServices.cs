@@ -43,52 +43,24 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
             .Select(g => new FilterCategoryDTO { Id = g.ID, Name = g.Name }).ToList();
 
             return getFilterDto;
-        }
-        public async Task<List<FilterResposeDTO>> FilterRequestAsync(FilterRequestDTO requestDTO)
+        } 
+        public async List<FilterResposeDTO> FilterRequest(FilterRequestDTO requestDTO)
         {
-            var result = new List<FilterResposeDTO>();
+            List<FilterResposeDTO> result=new();
 
-            var placeIdsQuery = PlaceRepo.GetAllWithFilter(p => !p.IsDeleted &&
-                (requestDTO.GovermantateId == null || p.GovermantateId == requestDTO.GovermantateId) &&
-                (requestDTO.CategoryId == null || p.categoryId == requestDTO.CategoryId))
-                                         .Select(p => p.ID);
+            if (requestDTO.Price != null) {
 
-            var filteredPosts = postRepo.GetAllWithFilter(c =>
-                c.Price <= requestDTO.Price &&
-                c.Rate <= requestDTO.Rate &&
-                placeIdsQuery.Contains(c.PlaceId)).ToList();
+                var Url = (await ImageURLRepo.GetItemAsync(I => I.PostId == 4)).Url;
 
-            var dtoTasks = filteredPosts.Select(async p =>
-            {
+                result = postRepo.GetAllWithFilter(c => c.Price <= requestDTO.Price)
+                    .Select(p => new FilterResposeDTO
+                    {
+                        ImageUrl = (await ImageURLRepo.GetItemAsync(I => I.PostId == p.ID)).Url
 
-                var imageUrl = await ImageURLRepo.GetItemAsync(i => i.PostId == p.ID);
-                var Place = await PlaceRepo.GetItemAsync(i => i.ID == p.PlaceId);
-                var govermantate = await GovermantateRepo.GetItemAsync(i => i.ID == Place.GovermantateId);
-                var wishlist = await WishlistRepo.GetItemAsync(i => i.PostId == p.ID);
-
-                return new FilterResposeDTO
-                {
-                    ImageUrl = imageUrl.Url,
-                    Price = p.Price,
-                    PlaceName = Place.Name,
-                    GovermantateName = govermantate.Name,
-                    Description = p.Description,
-                    DatePosted = p.DatePosted,
-                    Rate = p.Rate,
-                    IsInWishList = (wishlist != null),
-                };
-            });
-
-            result = (await Task.WhenAll(dtoTasks)).ToList();
-
+                        // Rate, Price, PlaceName, GovermantateName, Description, DatePosted, IsInWishList
+                    });
+            }
             return result;
         }
-  
-    
-        public async Task<> AppearMap()
-        {
-
-        }
-    
     }
 }

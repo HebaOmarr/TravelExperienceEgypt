@@ -7,7 +7,7 @@ using TravelExperienceEgypt.DataAccess.Models;
 
 namespace TravelExperienceEgypt.DataAccess.Repository.Contract
 {
-    public interface IPlaceRepo: IGenericRepository<Place>
+    public interface IPlaceRepository : IGenericRepository<Place>
     {
     }
 }
