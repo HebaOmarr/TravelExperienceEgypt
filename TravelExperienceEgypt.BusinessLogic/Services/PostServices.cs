@@ -1,33 +1,42 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Pipelines;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelExperienceEgypt.API.Results;
 using TravelExperienceEgypt.DataAccess;
 using TravelExperienceEgypt.DataAccess.DTO.Posts;
+using TravelExperienceEgypt.DataAccess.Migrations;
 using TravelExperienceEgypt.DataAccess.Models;
 using TravelExperienceEgypt.DataAccess.Repository.Contract;
 using TravelExperienceEgypt.DataAccess.UnitOfWork;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace TravelExperienceEgypt.BusinessLogic.Services
 {
     public class PostServices
     {
+        private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IUnitOfWork unitOfWork;
         private readonly IWebHostEnvironment _env;
-        public PostServices(IUnitOfWork unitOfWork,IWebHostEnvironment _env)
+        public PostServices(RoleManager<ApplicationRole> roleManager,
+          UserManager<ApplicationUser> userManager,IUnitOfWork unitOfWork,IWebHostEnvironment _env)
         {
             this.unitOfWork = unitOfWork;
             this._env = _env;
-            Debug.Assert(_env != null);
+            this.roleManager = roleManager;
+            this.userManager = userManager;
         }
         public GetFilterOptionsDTO GetFilterOptions()
         {
@@ -42,7 +51,11 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
 
             return getFilterDto;
         }
-      
+        /// <summary>
+        /// I take much time to think in this what is better way to make this I see dubeg
+        /// and results is not good enought
+        /// </summary>
+        /// 
         //public async Task<List<FilterResposeDTO>> FilterRequestAsync(FilterRequestDTO requestDTO)
         //{
         //    var result = new List<FilterResposeDTO>();
@@ -53,7 +66,7 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
         //        (requestDTO.CategoryId == 0 || p.categoryId == requestDTO.CategoryId))
         //                                 .Select(p => p.ID);
 
-            
+
         //    var filteredPosts = unitOfWork.Post.GetAllWithFilter(c =>
         //(requestDTO.Price == 0 || c.Price <= requestDTO.Price) &&
         //(requestDTO.Rate == 0 || c.Rate <= requestDTO.Rate) &&
@@ -69,10 +82,10 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
 
         //        return new FilterResposeDTO
         //        {
-        //            ImageUrl = imageUrl?.Url??"Not Found",
+        //            ImageUrl = imageUrl?.Url ?? "Not Found",
         //            Price = p.Price,
-        //            PlaceName = Place?.Name??"Not Valid",
-        //            GovermantateName = govermantate?.Name??"Not Valid",
+        //            PlaceName = Place?.Name ?? "Not Valid",
+        //            GovermantateName = govermantate?.Name ?? "Not Valid",
         //            Description = p.Description,
         //            DatePosted = p.DatePosted,
         //            Rate = p.Rate,
@@ -86,30 +99,133 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
         //}
 
 
-        public List<FilterResposeDTO> Filter(string PostName)
-        {
-            var Places = unitOfWork.Place.GetAllWithFilter(p => !p.IsDeleted).Select(p => p.ID);
 
-            var posts = unitOfWork.Post.GetAllWithFilter(p => p.Name.Contains(PostName) && Places.Contains(p.PlaceId) && !p.IsDeleted);
-
-            var result = unitOfWork.Post.GetAllWithFilter(p => p.Name.Contains(PostName) && !p.IsDeleted)
-    .Join(
-        unitOfWork.Place.GetAllWithFilter(pl => !pl.IsDeleted),
-        post => post.PlaceId,
-        place => place.ID,
-        (post, place) => new FilterResposeDTO
+        public async Task<Result<List<PostDetailsDTO>>> Filter(string PostName="")
         {
-            Id = post.ID,
-            ImageUrl = unitOfWork.ImageURL.GetAllWithFilter(i => i.PostId == post.ID).Select(i => i.Url).FirstOrDefault() ?? "not Valid",
-            Rate = post.Rate,
-            Price = post.Price,
-            PlaceName = place.Name,
-            Description = post.Description,
-            DatePosted = post.DatePosted,
+            var posts = unitOfWork.Post
+                .GetAllWithFilter(p => p.Name.Contains(PostName) && !p.IsDeleted)
+                .Include(p => p.User)
+                .Include(p => p.Place)
+                .ThenInclude(x => x.category)
+                .Select(p => new PostDetailsDTO()
+                {
+                    Id = p.ID,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    Rate = p.Rate,
+                    DatePosted = p.DatePosted,
+                    UserFirstName = p.User.FirstName,
+                    UserLastName = p.User.LastName,
+                    PlaceName = p.Place.Name,
+                    PlaceDescription = p.Place.Description,
+                    CategoryName = p.Place.category.Name,
+                })
+                .AsNoTracking()
+                .ToList();
+            foreach (var item in posts)
+            {
+                item.ImageURLs =unitOfWork.ImageURL.GetAllWithFilter(i => i.PostId == item.Id).Select(i => i.Url).ToList();
+            }
+            if (posts == null || posts.Count == 0)
+                return Result<List<PostDetailsDTO>>.Failure("No matching posts found.");
+
+            return Result<List<PostDetailsDTO>>.Success(posts);
         }
-    ).AsNoTracking().ToList();
 
-            return result;
+        public async Task<Result<PostDetailsDTO>> GetPostDetails(int id)
+        {
+            var post = unitOfWork.Post.GetAllWithFilter(p => p.ID == id && !p.IsDeleted).FirstOrDefault();
+            if (post == null)
+            {
+                return Result<PostDetailsDTO>.Failure("Post Not Exist");
+            }
+
+            var place = unitOfWork.Place.GetAllWithFilter(p=>p.ID==post.PlaceId).Select(p=>new { p.categoryId, p.Name, p.Description, p.ID, p.GovermantateId }).FirstOrDefault();
+            if (place == null)
+            {
+                return Result<PostDetailsDTO>.Failure("place not found");
+            }
+
+            var govermantate = unitOfWork.Govermantate.GetAllWithFilter(g => g.ID == place.GovermantateId).Select(g => g.Name).FirstOrDefault();
+            var category = unitOfWork.Category.GetAllWithFilter(g => g.ID == place.categoryId).Select(g => g.Name).FirstOrDefault();
+
+            ApplicationUser? user =await userManager.FindByIdAsync(post.UserId.ToString());
+            if (user == null)
+            {
+                return Result<PostDetailsDTO>.Failure("User not found.");
+            }
+            var postDetails = new PostDetailsDTO()
+            {
+                Name = post.Name,
+                Description = post.Description,
+                Price = post.Price,
+                Rate = post.Rate,
+                DatePosted = post.DatePosted,
+                PlaceName = place.Name,
+                PlaceDescription = place.Description,
+                UserFirstName = user.FirstName,
+                UserLastName = user.LastName,
+                CategoryName = category
+            };
+            return Result<PostDetailsDTO>.Success(postDetails);
+        }
+
+
+        /// <summary>
+        /// ////////////////////////Second way
+        /// </summary>
+        public async Task<Result<PostDetailsDTO>> PostDetails(int id)
+        {
+            var p = await unitOfWork.Post
+                .GetAllWithFilter(x => x.ID == id && !x.IsDeleted)
+                .Include(x => x.Place)
+                    .ThenInclude(pl => pl.Govermantate)
+                .Include(x => x.Place)
+                    .ThenInclude(pl => pl.category)
+               .Select(item => new
+               {
+                   NamePost = item.Name,
+                   GovernamtateName = item.Place.Govermantate.Name,
+                   categoryName = item.Place.category.Name,
+                   PlaceName = item.Place.Name,
+                   placeDesc = item.Place.Description,
+                   item.Description,
+                   item.Price,
+                   item.Rate,
+                   item.DatePosted,
+                   item.UserId,
+                   item.ID
+               })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+
+            if (p == null)
+                return Result<PostDetailsDTO>.Failure("Post Not Exist");
+
+            var user = await userManager.FindByIdAsync(p.UserId.ToString());
+            if (user == null)
+                return Result<PostDetailsDTO>.Failure("User not found.");
+
+            List<string> Images = unitOfWork.ImageURL.GetAllWithFilter(i => i.PostId == p.ID).Select(i => i.Url).ToList();
+
+            var dto = new PostDetailsDTO
+            {
+                ImageURLs = Images,
+                Name = p.NamePost,
+                Description = p.Description,
+                Price = p.Price,
+                Rate = p.Rate,
+                DatePosted = p.DatePosted,
+                PlaceName = p.PlaceName,
+                PlaceDescription = p.placeDesc,
+                CategoryName = p.categoryName,
+                UserFirstName = user.FirstName,
+                UserLastName = user.LastName
+            };
+
+            return Result<PostDetailsDTO>.Success(dto);
         }
 
         public async Task<Result<string>> AddPost(AddPostDTO dto, IFormFile imageFile,int UserId)

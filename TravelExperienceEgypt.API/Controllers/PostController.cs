@@ -27,18 +27,27 @@ namespace TravelExperienceEgypt.API.Controllers
            return  Ok(PostServices.GetFilterOptions());
         }
 
-        [HttpPost("get-data")]
-        public async Task<ActionResult> GetFilterOptions(string RequestName)
+        [HttpPost("Posts")]
+        public async Task<ActionResult> GetFilterOptions(string RequestName="")
         {
             try
             {
-                List<FilterResposeDTO> filterResposes = PostServices.Filter(RequestName);
+                Result<List<PostDetailsDTO>> filterResposes = await PostServices.Filter(RequestName);
                 return Ok(filterResposes);
             }
             catch
             {
                 return BadRequest("An error occurred while processing your request");
             }
+        }
+
+        [HttpGet("Det/{id:int}")]
+        public async Task<ActionResult> GetPostDetails(int id)
+        {
+            var result = await PostServices.PostDetails(id);
+            if (result.IsSuccess)
+                return Ok(result);
+            return BadRequest(result);
         }
 
 
