@@ -16,6 +16,7 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
         ICategoryRepo Category { get; }
         IWishlistRepo WishList { get; }
         IGovernorateRepository Govermantate { get; }
+        ICommentRepo Comment {get;}
         Task Save();  
     }
 }
