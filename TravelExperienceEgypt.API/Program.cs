@@ -31,7 +31,7 @@ namespace TravelExperienceEgypt
               options =>
               {
                  // options.UseSqlServer(builder.Configuration.GetConnectionString("DataBaseConnectionString"));
-                  options.UseSqlServer(builder.Configuration.GetConnectionString("BeshoyCS"));
+                  options.UseSqlServer(builder.Configuration.GetConnectionString("DataBaseConnectionString"));
 
               }
               );
@@ -41,6 +41,8 @@ namespace TravelExperienceEgypt
             builder.Services.AddScoped<IPostRepo, PostRepo>();
             builder.Services.AddScoped<IWishlistRepo, WishlistRepo>();
             builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
+            builder.Services.AddScoped<IGovernorateRepository, GovernorateRepository>();
+
 
             //register service
             builder.Services.AddScoped<PlaceService>();

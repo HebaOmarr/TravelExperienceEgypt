@@ -21,23 +21,14 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
         public IGovernorateRepository Govermantate { get; private set; }
         public ICategoryRepo Category { get; }
         public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,
-            IWishlistRepo wishlistRepo, ICategoryRepo categoryRepo)
+            IWishlistRepo wishlistRepo, ICategoryRepo categoryRepo ,IGovernorateRepository governorateRepository)
         {
             this.applicationDBContext = applicationDBContext;
             Post = postRepo;
-            
+ 
             WishList = wishlistRepo;
-           
-        }
-        public IGovernorateRepository GovermantateRepository
-        {
-            get
-            {
-                if (Govermantate == null) {
-                    Govermantate = new GovernorateRepository(applicationDBContext);
-                }
-                return Govermantate;
-            }
+            Govermantate = governorateRepository;
+
         }
         public IPlaceRepository PlaceRepository
         {

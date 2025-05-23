@@ -70,7 +70,7 @@ namespace TravelExperienceEgypt.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreatePlace(CreatePlaceDTO dto)
         {

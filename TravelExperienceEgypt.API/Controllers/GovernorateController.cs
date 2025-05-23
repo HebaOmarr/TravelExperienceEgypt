@@ -82,7 +82,7 @@ namespace TravelExperienceEgypt.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateGovernorate(CreateGovernorateDto dto)
         {
@@ -100,16 +100,16 @@ namespace TravelExperienceEgypt.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPut]
-        public async Task<IActionResult> UpdateGovernorate(UpdateGovernorateDto dto)
+        //[Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateGovernorate(int id,UpdateGovernorateDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                bool success = await _governorateService.UpdateGovermantateByIdRequest(dto);
+                bool success = await _governorateService.UpdateGovermantateByIdRequest(dto, id);
                 if (success)
                     return Ok(new { message = "Governorate updated successfully." });
 
@@ -121,13 +121,13 @@ namespace TravelExperienceEgypt.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGovernorate(int id)
         {
             try
             {
-                bool success = await _governorateService.UpdateGovermantateByIdRequest(id);
+                bool success = await _governorateService.DeleteGovermantateByIdRequest(id);
                 if (success)
                     return Ok(new { message = "Governorate deleted successfully." });
 

@@ -13,8 +13,8 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
 {
     public class GovernorateService 
     {
-        UnitOfWork _unitOfWork;
-        public GovernorateService(UnitOfWork unitOfWork)
+        IUnitOfWork _unitOfWork;
+        public GovernorateService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -39,32 +39,49 @@ namespace TravelExperienceEgypt.BusinessLogic.Services
         }
         public async Task CreateGovermantateRequest(CreateGovernorateDto DTO)
         {
-            Govermantate Govermantate = new Govermantate {
+            Govermantate govermantate = new Govermantate {
                 Description=DTO.OverviewDescription,
                 Image=DTO.ImageLink,
                 Latitude=DTO.Lat,
                 Name= DTO.Title,
                 longitude= DTO.Lng
             };
-            _unitOfWork.Govermantate.AddAsync(Govermantate);
+           await _unitOfWork.Govermantate.AddAsync(govermantate);
+            await _unitOfWork.Save();
         }
-        public async Task<bool> UpdateGovermantateByIdRequest(UpdateGovernorateDto DTO)
+        public async Task<bool> UpdateGovermantateByIdRequest(UpdateGovernorateDto DTO, int id)
         {
             Govermantate Govermantate = new Govermantate
             {
+                ID =id,
                 Description = DTO.OverviewDescription,
                 Image = DTO.ImageLink,
                 Latitude = DTO.Lat,
                 Name = DTO.Title,
                 longitude = DTO.Lng
             };
-           return await _unitOfWork.Govermantate.UpdateAsync(g=>g.ID== DTO.GovermantateId, Govermantate);
+           bool res= await _unitOfWork.Govermantate.UpdateAsync(g=>g.ID== id, Govermantate);
+            if (res)
+            {
+                await _unitOfWork.Save();
+                return true;
+            }
+            return false;
+
         }
-        public async Task<bool> UpdateGovermantateByIdRequest(int Id )
+        public async Task<bool> DeleteGovermantateByIdRequest(int Id )
         {
-            return await _unitOfWork.Govermantate.Delete(g => g.ID == Id);
+
+            bool res = await _unitOfWork.Govermantate.Delete(g => g.ID == Id);
+            if (res)
+            {
+                await _unitOfWork.Save();
+                return true;
+            }
+            return false;
+
         }
-        
+
 
     }
 }
