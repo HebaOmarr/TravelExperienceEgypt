@@ -15,34 +15,24 @@ namespace TravelExperienceEgypt.DataAccess.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDBContext applicationDBContext;
-        public IPostRepo Post { get;  }
+        public IPostRepo Post { get; private set; }
         public IPlaceRepository Place { get; private set; }
-        public IWishlistRepo WishList { get;  }
+        public IWishlistRepo WishList { get; private set; }
+        public IIMageURLRepo ImageURL { get; private set; }
         public IGovernorateRepository Govermantate { get; private set; }
-        public ICategoryRepo Category { get; }
-        public UnitOfWork(ApplicationDBContext applicationDBContext, IPostRepo postRepo,
-            IWishlistRepo wishlistRepo, ICategoryRepo categoryRepo ,IGovernorateRepository governorateRepository)
+        public ICategoryRepo Category { get; private set; }
+
+        public UnitOfWork(ApplicationDBContext applicationDBContext)
         {
             this.applicationDBContext = applicationDBContext;
-            Post = postRepo;
- 
-            WishList = wishlistRepo;
-            Govermantate = governorateRepository;
 
+            this.Post = new PostRepo(applicationDBContext);
+            this.WishList = new WishlistRepo(applicationDBContext);
+            this.Place = new PlaceRepository(applicationDBContext);
+            this.ImageURL = new IMageURLRepo(applicationDBContext);
+            this.Govermantate = new GovernorateRepository(applicationDBContext);
+            this.Category = new CategoryRepo(applicationDBContext);
         }
-        public IPlaceRepository PlaceRepository
-        {
-            get
-            {
-                if (Place == null)
-                {
-                    Place = new PlaceRepository(applicationDBContext);
-                }
-                return Place;
-            }
-        }
-
-
         public async void Dispose()
         {
             await applicationDBContext.DisposeAsync();
